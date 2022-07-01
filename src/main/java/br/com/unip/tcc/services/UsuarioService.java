@@ -5,8 +5,13 @@ import br.com.unip.tcc.dtos.responses.UsuarioResponse;
 import br.com.unip.tcc.entities.UsuarioEntity;
 import br.com.unip.tcc.mappers.UsuarioMapper;
 import br.com.unip.tcc.repositories.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +19,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public record UsuarioService(UsuarioMapper mapper, UsuarioRepository repository) {
+@RequiredArgsConstructor
+public class UsuarioService implements UserDetailsService {
+
+    private final UsuarioMapper mapper;
+    private final UsuarioRepository repository;
+    private final BCryptPasswordEncoder passwordEncoder;
+
 
     public UsuarioResponse insert(UsuarioRequest request) {
+        request.setSenha(passwordEncoder.encode(request.getSenha()));
         var usuario = repository.save(mapper.toUsuarioEntity(request));
         return mapper.toUsuarioResponse(usuario);
     }
@@ -54,5 +66,14 @@ public record UsuarioService(UsuarioMapper mapper, UsuarioRepository repository)
     private void setUsuario(UsuarioEntity entity, UsuarioRequest request) {
         entity.setDescricao(request.getDescricao());
         entity.setNome(request.getNome());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UsuarioEntity user = repository.findByEmail(username);
+        if(user == null) {
+            throw new UsernameNotFoundException("Email not found");
+        }
+        return user;
     }
 }

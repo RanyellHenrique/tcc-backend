@@ -6,13 +6,11 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "tb_categoria")
-public class CategoriaEntity {
+@Table(name = "tb_perfil")
+public class PerfilEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(columnDefinition = "TEXT")
-    private String nome;
     private String descricao;
 }
