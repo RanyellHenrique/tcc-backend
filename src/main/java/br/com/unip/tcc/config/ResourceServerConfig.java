@@ -30,9 +30,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private final Environment env;
     private final JwtTokenStore tokenStore;
 
-    private static final String[] PUBLIC = {"/oauth/token", "/h2-console/**"};
-    private static final String[] OPERATOR_OR_ADMIN = {"/usuarios/**"};
-    private static final String[] ADMIN = {"/usuarios/**"};
+    private static final String[] PUBLIC = {"/oauth/token", "/h2-console/**", "/usuarios/**"};
+    private static final String[] OPERATOR_OR_ADMIN = {"/categorias/**"};
+    private static final String[] ADMIN = {"/categorias/**"};
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
