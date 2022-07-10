@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "tb_cliente")
 @JsonTypeName("tb_cliente")
 @SequenceGenerator(name = "seq_tb_usuarios", sequenceName = "seq_tb_cliente", allocationSize = 1)
-public class ClienteEntitity extends UsuarioEntity{
+public class ClienteEntity extends UsuarioEntity {
 
     private String cnpj;
 }

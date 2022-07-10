@@ -18,12 +18,13 @@ public class PropostaEntity {
 
     @Enumerated(EnumType.ORDINAL)
     private EstadoPropostaEnum estado;
-
+    @Column(columnDefinition = "TEXT")
     private String descricao;
     private LocalDateTime dataDeCadastro;
     private LocalDateTime dataDeAtualizacao;
     private LocalDate dataInicio;
     private LocalDate dataFim;
+    @Column(columnDefinition = "TEXT")
     private String analiseDescricao;
 
     @OneToOne(mappedBy = "proposta")
