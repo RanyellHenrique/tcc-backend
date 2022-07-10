@@ -44,6 +44,9 @@ public class UsuarioEntity implements UserDetails, Serializable {
             inverseJoinColumns = @JoinColumn(name = "perfil_id"))
     private Set<PerfilEntity> perfis = new HashSet<>();
 
+    @OneToOne
+    private EnderecoEntity endereco;
+
     @PrePersist
     public void prePersist() {
         dataDeCadastro = LocalDateTime.now();
