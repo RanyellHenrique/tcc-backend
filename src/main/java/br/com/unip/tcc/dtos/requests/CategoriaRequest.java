@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class CategoriaRequest {
 
+    private Long id;
     @NotBlank
     private String nome;
     @NotBlank
