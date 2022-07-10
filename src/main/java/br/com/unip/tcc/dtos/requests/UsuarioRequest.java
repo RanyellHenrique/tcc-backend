@@ -14,4 +14,5 @@ public class UsuarioRequest {
     private LocalDate dataDeNascimento;
     private String descricao;
     private String urlImagem;
+    private EnderecoRequest endereco;
 }

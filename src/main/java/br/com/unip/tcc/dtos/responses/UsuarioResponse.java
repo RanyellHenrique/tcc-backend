@@ -13,4 +13,5 @@ public class UsuarioResponse {
     private LocalDate dataDeNascimento;
     private String descricao;
     private String urlImagem;
+    private EnderecoResponse endereco;
 }

@@ -44,7 +44,7 @@ public class UsuarioEntity implements UserDetails, Serializable {
             inverseJoinColumns = @JoinColumn(name = "perfil_id"))
     private Set<PerfilEntity> perfis = new HashSet<>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private EnderecoEntity endereco;
 
     @PrePersist
