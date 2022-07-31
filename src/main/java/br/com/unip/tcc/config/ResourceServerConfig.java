@@ -31,8 +31,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     private static final String[] PUBLIC = {"/oauth/token", "/h2-console/**"};
     private static final String[] ADMIN = {"/categorias/**", "/usuarios/**",};
-    private static final String[] CLIENTE = {"/ofertas/**"};
-    private static final String[] PUBLIC_ONLY_READING = {"/categorias/**", "/ofertas/**"};
+    private static final String[] CLIENTE = {"/ofertas/**", "/propostas/clientes/**"};
+    private static final String[] TRABALHADOR = {"/propostas/**"};
+    private static final String[] PUBLIC_ONLY_READING = {"/categorias/**", "/ofertas/**", "/trabalhadores/**"};
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
@@ -50,6 +51,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(PUBLIC).permitAll()
                 .antMatchers(GET, PUBLIC_ONLY_READING).permitAll()
                 .antMatchers(CLIENTE).hasAnyAuthority("CLIENTE")
+                .antMatchers(POST, TRABALHADOR).hasAnyAuthority("TRABALHADOR")
                 .antMatchers(ADMIN).hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated();
 

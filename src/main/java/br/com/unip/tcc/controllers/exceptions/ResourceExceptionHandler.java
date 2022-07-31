@@ -1,6 +1,8 @@
 package br.com.unip.tcc.controllers.exceptions;
 
+import br.com.unip.tcc.dtos.exceptions.StandardError;
 import br.com.unip.tcc.dtos.exceptions.ValidationError;
+import br.com.unip.tcc.services.exceptions.ForbiddenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -28,6 +30,18 @@ public class ResourceExceptionHandler {
             err.addError(f.getField(), f.getDefaultMessage());
         }
 
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<StandardError> database(ForbiddenException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err =  new StandardError();
+        err.setTimestamp(Instant.now());
+        err.setStatus(status.value());
+        err.setError("Forbidden exception");
+        err.setMessage(e.getMessage());
+        err.setPath(request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 }

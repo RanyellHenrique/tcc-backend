@@ -1,5 +1,6 @@
 package br.com.unip.tcc.services;
 
+import br.com.unip.tcc.dtos.requests.PropostaAnaliseRequest;
 import br.com.unip.tcc.dtos.requests.PropostaRequest;
 import br.com.unip.tcc.dtos.responses.PropostaResponse;
 import br.com.unip.tcc.entities.OfertaEntity;
@@ -7,11 +8,17 @@ import br.com.unip.tcc.entities.PropostaEntity;
 import br.com.unip.tcc.entities.TrabalhadorEntity;
 import br.com.unip.tcc.entities.pk.PropostaEntityPK;
 import br.com.unip.tcc.mappers.PropostaMapper;
+import br.com.unip.tcc.repositories.ClienteRepository;
 import br.com.unip.tcc.repositories.OfertaRepository;
 import br.com.unip.tcc.repositories.PropostaRepository;
 import br.com.unip.tcc.repositories.TrabalhadorRepository;
+import br.com.unip.tcc.services.exceptions.ForbiddenException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 import static br.com.unip.tcc.entities.enums.EstadoPropostaEnum.ABERTA;
 
@@ -21,6 +28,7 @@ public class PropostaService {
 
     private final PropostaRepository repository;
     private final TrabalhadorRepository trabalhadorRepository;
+    private final ClienteRepository clienteRepository;
     private final OfertaRepository ofertaRepository;
     private final PropostaMapper mapper;
 
@@ -38,5 +46,36 @@ public class PropostaService {
         proposta.getPropostaPK().setTrabalhador(trabalhador);
         proposta.getPropostaPK().setOferta(oferta);
         proposta.setEstado(ABERTA);
+    }
+
+    public Page<PropostaResponse> findByCliente(String clienteEmail, Long ofertaId, PageRequest pageRequest) {
+        var cliente = clienteRepository.findByEmail(clienteEmail);
+        return repository.findAllPropostasByCliente(cliente.getId(), ofertaId, pageRequest)
+                .map(mapper::toPropostaResponse);
+    }
+
+    public Page<PropostaResponse> findByTrabalhador(String clienteEmail, Long ofertaId, PageRequest pageRequest) {
+        var trabalhador = trabalhadorRepository.findByEmail(clienteEmail);
+        return repository.findAllPropostasByTrabalhador(trabalhador.getId(), ofertaId, pageRequest)
+                .map(mapper::toPropostaResponse);
+    }
+
+    public Optional<PropostaEntity> evalueteProposta(PropostaAnaliseRequest request, String clienteEmail) {
+        var oferta = ofertaRepository.findById(request.getIdOferta()).orElseThrow();
+        if(!clienteEmail.equals(oferta.getCliente().getEmail())) {
+            throw new ForbiddenException("Forbidden");
+        }
+        var trabalhador = trabalhadorRepository.findById(request.getIdTrabalhador()).orElseThrow();
+        Optional<PropostaEntity> proposta = repository.findById(new PropostaEntityPK(trabalhador, oferta));
+        setEvalueteProposta(proposta, request);
+        return proposta;
+    }
+
+    private void setEvalueteProposta(Optional<PropostaEntity> proposta, PropostaAnaliseRequest request) {
+        if(proposta.isPresent()) {
+            PropostaEntity propostaEntity = proposta.get();
+            propostaEntity.setEstado(request.getEstado());
+            propostaEntity.setAnaliseDescricao(request.getAnaliseDescricao());
+        }
     }
 }
