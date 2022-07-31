@@ -16,4 +16,6 @@ public interface OfertaRepository extends JpaRepository<OfertaEntity, Long> {
             + "(:categoria IS NULL OR :categoria IN cats.id ) AND"
             + "(:titulo = '' OR LOWER(obj.titulo) LIKE LOWER(CONCAT('%',:titulo,'%') ))")
     Page<OfertaEntity> findAllPage(Long categoria, String titulo, Pageable pageable);
+
+    OfertaEntity findOfertaById(Long id);
 }

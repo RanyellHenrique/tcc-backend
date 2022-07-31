@@ -31,11 +31,11 @@ public class OfertaController {
 
     @GetMapping
     public ResponseEntity<Page<OfertaResponse>> findAllPage(@RequestParam(value = "categorias", defaultValue = "0") Long categoria,
-                                                        @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                        @RequestParam(value = "titulo", defaultValue = "") String titulo,
-                                                        @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
-                                                        @RequestParam(value = "direction", defaultValue = "ASC") String direction,
-                                                        @RequestParam(value = "orderBy", defaultValue = "id") String orderBy) {
+                                                            @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                            @RequestParam(value = "titulo", defaultValue = "") String titulo,
+                                                            @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
+                                                            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+                                                            @RequestParam(value = "orderBy", defaultValue = "id") String orderBy) {
 
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
@@ -45,19 +45,18 @@ public class OfertaController {
     @GetMapping("/{id}")
     public ResponseEntity<OfertaResponse> findById(@PathVariable Long id) {
         var oferta = service.findById(id);
-        if(oferta.isEmpty()) {
+        if (oferta.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(oferta.get());
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<OfertaResponse> update(@PathVariable Long id, @RequestBody @Valid OfertaRequest request){
+    public ResponseEntity<OfertaResponse> update(@PathVariable Long id, @RequestBody @Valid OfertaRequest request) {
         var oferta = service.update(id, request);
-        if(oferta.isEmpty()) {
+        if (oferta.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok().body(oferta.get());
     }
-
 }
