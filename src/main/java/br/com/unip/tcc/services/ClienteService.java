@@ -3,6 +3,7 @@ package br.com.unip.tcc.services;
 import br.com.unip.tcc.dtos.requests.ClienteRequest;
 import br.com.unip.tcc.dtos.responses.ClienteResponse;
 import br.com.unip.tcc.entities.ClienteEntity;
+import br.com.unip.tcc.entities.PerfilEntity;
 import br.com.unip.tcc.mappers.ClienteMapper;
 import br.com.unip.tcc.repositories.ClienteRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +23,18 @@ public class ClienteService {
     private final ClienteMapper mapper;
     private final ClienteRepository repository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private static final Long idPerfilCliente = 2L;
 
     public ClienteResponse insert(ClienteRequest request) {
         request.setSenha(passwordEncoder.encode(request.getSenha()));
-        var Cliente = repository.save(mapper.toClienteEntity(request));
-        return mapper.toClienteResponse(Cliente);
+        var cliente = mapper.toClienteEntity(request);
+        addPerfilCliente(cliente);
+        cliente = repository.save(cliente);
+        return mapper.toClienteResponse(cliente);
+    }
+
+    private void addPerfilCliente(ClienteEntity cliente) {
+        cliente.getPerfis().add(new PerfilEntity(idPerfilCliente));
     }
 
     public List<ClienteResponse> findAll() {

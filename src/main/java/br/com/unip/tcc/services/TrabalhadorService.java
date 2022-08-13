@@ -2,6 +2,7 @@ package br.com.unip.tcc.services;
 
 import br.com.unip.tcc.dtos.requests.TrabalhadorRequest;
 import br.com.unip.tcc.dtos.responses.TrabalhadorResponse;
+import br.com.unip.tcc.entities.PerfilEntity;
 import br.com.unip.tcc.entities.TrabalhadorEntity;
 import br.com.unip.tcc.mappers.TrabalhadorMapper;
 import br.com.unip.tcc.repositories.TrabalhadorRepository;
@@ -22,11 +23,18 @@ public class TrabalhadorService {
     private final TrabalhadorMapper mapper;
     private final TrabalhadorRepository repository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private static final Long idPerfilTrabalhador = 3L;
 
     public TrabalhadorResponse insert(TrabalhadorRequest request) {
         request.setSenha(passwordEncoder.encode(request.getSenha()));
-        var trabalhador = repository.save(mapper.toTrabalhadorEntity(request));
+        var trabalhador = mapper.toTrabalhadorEntity(request);
+        addPerfilTrabalhador(trabalhador);
+        trabalhador = repository.save(trabalhador);
         return mapper.toTrabalhadorResponse(trabalhador);
+    }
+
+    private void addPerfilTrabalhador(TrabalhadorEntity trabalhador) {
+        trabalhador.getPerfis().add(new PerfilEntity(idPerfilTrabalhador));
     }
 
     public List<TrabalhadorResponse> findAll() {
