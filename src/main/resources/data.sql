@@ -21,13 +21,12 @@ INSERT INTO  tb_oferta (ativa, descricao, preco, sub_titulo, titulo, cliente_id)
 INSERT INTO  tb_oferta (ativa, descricao, preco, sub_titulo, titulo, cliente_id) VALUES (true, 'Desenvolvedor Back end', 2800.15, 'Back end', 'Desenvolvedor Back end', 91120);
 INSERT INTO  tb_oferta (ativa, descricao, preco, sub_titulo, titulo, cliente_id) VALUES (true, 'Desenvolvedor Front end', 1900.95, 'Front end', 'Desenvolvedor Front end', 91120);
 INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (1, 1);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (1, 4);
 INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (1, 2);
-INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (1, 3);
 INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (2, 1);
 INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (2, 2);
-INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (2, 3);
-INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (3, 1);
-INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (3, 2);
-INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (3, 3);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (2, 5);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (3, 4);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (3, 6);
 
 
