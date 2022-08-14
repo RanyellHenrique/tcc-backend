@@ -9,15 +9,25 @@ INSERT INTO  tb_trabalhador (cpf, id) VALUES ('123456', 91121);
 INSERT INTO  tb_usuario_perfil (usuario_id, perfil_id) VALUES (91120, 2);
 INSERT INTO  tb_usuario_perfil (usuario_id, perfil_id) VALUES (91121, 3);
 INSERT INTO  tb_usuario_perfil (usuario_id, perfil_id) VALUES (91122, 1);
-INSERT INTO  tb_categoria ( nome, descricao) VALUES ( 'Desenvolvedor Java', 'Programa e desenvolve, implanta sistemas em linguagem Java');
-INSERT INTO  tb_categoria ( nome, descricao) VALUES ( 'Desenvolvedor Python', 'Programa e desenvolve, implanta sistemas em linguagem Python');
-INSERT INTO  tb_categoria ( nome, descricao) VALUES ( 'Desenvolvedor PHP', 'Programa, desenvolve e implanta sistemas em linguagem PHP');
-INSERT INTO  tb_categoria ( nome, descricao) VALUES ( 'Desenvolvedor Java Script', 'Programa, desenvolve e implanta sistemas em linguagem Java Script');
-INSERT INTO  tb_categoria ( nome, descricao) VALUES ( 'Back-end', 'Programa, desenvolve e implanta sistemas Back-end');
-INSERT INTO  tb_categoria ( nome, descricao) VALUES ( 'Front-end', 'Programa, desenvolve e implanta sistemas Front-end');
+INSERT INTO  tb_categoria ( nome, descricao) VALUES ( 'Dev. Java', 'Programa e desenvolve, implanta sistemas em linguagem Java');
+INSERT INTO  tb_categoria ( nome, descricao) VALUES ( 'Dev. Python', 'Programa e desenvolve, implanta sistemas em linguagem Python');
+INSERT INTO  tb_categoria ( nome, descricao) VALUES ( 'Dev. PHP', 'Programa, desenvolve e implanta sistemas em linguagem PHP');
+INSERT INTO  tb_categoria ( nome, descricao) VALUES ( 'Dev. Java Script', 'Programa, desenvolve e implanta sistemas em linguagem Java Script');
+INSERT INTO  tb_categoria ( nome, descricao) VALUES ( 'Dev. Back-end', 'Programa, desenvolve e implanta sistemas Back-end');
+INSERT INTO  tb_categoria ( nome, descricao) VALUES ( 'Dev. Front-end', 'Programa, desenvolve e implanta sistemas Front-end');
 INSERT INTO  tb_trabalhador_categoria ( trabalhador_id, categoria_id ) VALUES ( 91121, 1 );
 INSERT INTO  tb_trabalhador_categoria ( trabalhador_id, categoria_id ) VALUES ( 91121, 2 );
-
-
+INSERT INTO  tb_oferta (ativa, descricao, preco, sub_titulo, titulo, cliente_id) VALUES (true, 'Desenvolvedor Full Stack', 2900.10, 'Full Stack', 'Desenvolvedor Full Stack', 91120);
+INSERT INTO  tb_oferta (ativa, descricao, preco, sub_titulo, titulo, cliente_id) VALUES (true, 'Desenvolvedor Back end', 2800.15, 'Back end', 'Desenvolvedor Back end', 91120);
+INSERT INTO  tb_oferta (ativa, descricao, preco, sub_titulo, titulo, cliente_id) VALUES (true, 'Desenvolvedor Front end', 1900.95, 'Front end', 'Desenvolvedor Front end', 91120);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (1, 1);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (1, 2);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (1, 3);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (2, 1);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (2, 2);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (2, 3);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (3, 1);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (3, 2);
+INSERT INTO  tb_oferta_categoria (oferta_id, categoria_id) VALUES (3, 3);
 
 
