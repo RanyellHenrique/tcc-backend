@@ -4,6 +4,10 @@ import br.com.unip.tcc.dtos.requests.OfertaRequest;
 import br.com.unip.tcc.dtos.responses.OfertaResponse;
 import br.com.unip.tcc.services.OfertaService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,6 +25,7 @@ import java.net.URI;
 public class OfertaController {
 
     private final OfertaService service;
+    private static final Logger logger = LoggerFactory.getLogger(OfertaController.class);
 
     @PostMapping
     public ResponseEntity<OfertaResponse> insert(@RequestBody @Valid OfertaRequest request, @AuthenticationPrincipal String cliente) {
@@ -45,6 +50,7 @@ public class OfertaController {
     @GetMapping("/{id}")
     public ResponseEntity<OfertaResponse> findById(@PathVariable Long id) {
         var oferta = service.findById(id);
+        logger.info("oferta de id: {} retornada", id);
         if (oferta.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
