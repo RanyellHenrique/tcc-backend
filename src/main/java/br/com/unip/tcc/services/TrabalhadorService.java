@@ -9,6 +9,8 @@ import br.com.unip.tcc.repositories.TrabalhadorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -70,5 +72,14 @@ public class TrabalhadorService {
     private void setTrabalhador(TrabalhadorEntity entity, TrabalhadorRequest request) {
         entity.setDescricao(request.getDescricao());
         entity.setNome(request.getNome());
+    }
+
+    public Page<TrabalhadorResponse> findAllPage(Long categoria, String titulo, Pageable pageable) {
+        return repository.findAllPage(getCategoria(categoria), titulo, pageable)
+                .map(mapper::toTrabalhadorResponse);
+    }
+
+    private Long getCategoria(Long categoria) {
+        return categoria == 0 ? null : categoria;
     }
 }

@@ -13,9 +13,11 @@ import java.time.LocalDateTime;
 @Table(name = "tb_proposta")
 public class PropostaEntity {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true)
+    private Long id;
     @EmbeddedId
     private PropostaEntityPK propostaPK;
-
     @Enumerated(EnumType.ORDINAL)
     private EstadoPropostaEnum estado;
     @Column(columnDefinition = "TEXT")

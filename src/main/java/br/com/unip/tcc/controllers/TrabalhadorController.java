@@ -4,6 +4,9 @@ import br.com.unip.tcc.dtos.requests.TrabalhadorRequest;
 import br.com.unip.tcc.dtos.responses.TrabalhadorResponse;
 import br.com.unip.tcc.services.TrabalhadorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,8 +30,15 @@ public class TrabalhadorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TrabalhadorResponse>> findAll() {
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity<Page<TrabalhadorResponse>> findAll(@RequestParam(value = "categorias", defaultValue = "0") Long categoria,
+                                                             @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                             @RequestParam(value = "nome", defaultValue = "") String titulo,
+                                                             @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
+                                                             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+                                                             @RequestParam(value = "orderBy", defaultValue = "id") String orderBy) {
+
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        return ResponseEntity.ok(service.findAllPage(categoria, titulo, pageRequest));
     }
 
     @GetMapping("/{id}")
