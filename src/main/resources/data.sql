@@ -2,7 +2,7 @@ INSERT INTO  tb_perfil (id, descricao) VALUES (1, 'ADMIN');
 INSERT INTO  tb_perfil (id, descricao) VALUES (2, 'CLIENTE');
 INSERT INTO  tb_perfil (id, descricao) VALUES (3, 'TRABALHADOR');
 INSERT INTO  tb_usuario (id, email, senha, nome) VALUES (91120, 'ana@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 'Ana');
-INSERT INTO  tb_usuario (id, email, senha, nome) VALUES (91121, 'bob@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 'Bob');
+INSERT INTO  tb_usuario (id, email, senha, nome, descricao, telefone) VALUES (91121, 'bob@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 'Bob', '<p>Seja vindo ao meu perfil!<br />Desenvolvo projetos Front- End como p&aacute;ginas web, sistema de interface com usu&aacute;rio, com HTML, CSS, Javascript e framework como Vue.js.</p>', '(61) 94444-4444');
 INSERT INTO  tb_usuario (id, email, senha, nome) VALUES (91122, 'ranyell@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 'Ranyell');
 INSERT INTO  tb_cliente (cnpj, id) VALUES ('123456', 91120);
 INSERT INTO  tb_trabalhador (cpf, id) VALUES ('123456', 91121);
