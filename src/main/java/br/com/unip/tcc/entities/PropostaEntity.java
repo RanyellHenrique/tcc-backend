@@ -3,6 +3,9 @@ package br.com.unip.tcc.entities;
 import br.com.unip.tcc.entities.enums.EstadoPropostaEnum;
 import br.com.unip.tcc.entities.pk.PropostaEntityPK;
 import lombok.Data;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,8 +16,8 @@ import java.time.LocalDateTime;
 @Table(name = "tb_proposta")
 public class PropostaEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true)
+    @Generated(GenerationTime.INSERT)
+    @Column(unique = true, columnDefinition="serial")
     private Long id;
     @EmbeddedId
     private PropostaEntityPK propostaPK;

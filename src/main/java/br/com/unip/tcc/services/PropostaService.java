@@ -78,4 +78,22 @@ public class PropostaService {
             propostaEntity.setAnaliseDescricao(request.getAnaliseDescricao());
         }
     }
+
+    public PropostaResponse findById(String email, Long id) {
+        Optional<PropostaEntity> proposta = repository.findByIdProposta(id);
+
+        if(proposta.isPresent()) {
+            if (userIsPartProposta(proposta.get(), email)) {
+                return mapper.toPropostaResponse(proposta.get());
+            }
+            throw new ForbiddenException("Forbidden");
+        } else {
+            throw new IllegalArgumentException("Erro ao realizar a pesquisa");
+        }
+    }
+
+    private boolean userIsPartProposta(PropostaEntity proposta, String email) {
+        return email.equals(proposta.getPropostaPK().getTrabalhador().getEmail()) ||
+                email.equals(proposta.getPropostaPK().getOferta().getCliente().getEmail());
+    }
 }

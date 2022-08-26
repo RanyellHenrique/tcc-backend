@@ -30,6 +30,11 @@ public class PropostaController {
         return ResponseEntity.created(uri).build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PropostaResponse> findById(@AuthenticationPrincipal String clienteEmail, @PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(clienteEmail, id));
+    }
+
     @GetMapping("/clientes")
     public ResponseEntity<Page<PropostaResponse>> findAllByCliente(
             @RequestParam(value = "page", defaultValue = "0") Integer page,

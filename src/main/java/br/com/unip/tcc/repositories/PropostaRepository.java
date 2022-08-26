@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface PropostaRepository extends JpaRepository<PropostaEntity, PropostaEntityPK> {
 
@@ -16,9 +18,12 @@ public interface PropostaRepository extends JpaRepository<PropostaEntity, Propos
             "AND (:idOferta IS NULL OR :idOferta = obj.propostaPK.oferta.id)")
     Page<PropostaEntity> findAllPropostasByTrabalhador(Long idTrabalhador, Long idOferta, Pageable page);
 
-
     @Query("SELECT obj FROM PropostaEntity obj " +
             "WHERE obj.propostaPK.oferta.cliente.id = :idCliente " +
             "AND (:idOferta IS NULL OR :idOferta = obj.propostaPK.oferta.id)")
     Page<PropostaEntity> findAllPropostasByCliente(Long idCliente, Long idOferta, Pageable page);
+
+    @Query("SELECT obj FROM PropostaEntity obj " +
+            "WHERE obj.id = :id")
+    Optional<PropostaEntity> findByIdProposta(Long id);
 }
