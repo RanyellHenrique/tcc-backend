@@ -71,11 +71,24 @@ public class PropostaService {
         return proposta;
     }
 
+    public Optional<PropostaEntity> evaluetePropostaById(PropostaAnaliseRequest request, String clienteEmail, Long id) {
+        var oferta = ofertaRepository.findById(request.getIdOferta()).orElseThrow();
+        if(!clienteEmail.equals(oferta.getCliente().getEmail())) {
+            throw new ForbiddenException("Forbidden");
+        }
+        var trabalhador = trabalhadorRepository.findById(request.getIdTrabalhador()).orElseThrow();
+        Optional<PropostaEntity> proposta = repository.findByIdProposta(id);
+        setEvalueteProposta(proposta, request);
+        return proposta;
+    }
+
     private void setEvalueteProposta(Optional<PropostaEntity> proposta, PropostaAnaliseRequest request) {
         if(proposta.isPresent()) {
             PropostaEntity propostaEntity = proposta.get();
             propostaEntity.setEstado(request.getEstado());
             propostaEntity.setAnaliseDescricao(request.getAnaliseDescricao());
+            propostaEntity.getPropostaPK().getOferta().setAtiva(false);
+            repository.save(proposta.get());
         }
     }
 

@@ -72,4 +72,13 @@ public class PropostaController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<PropostaResponse> evalueteProposta(@AuthenticationPrincipal String cliente, @RequestBody @Valid PropostaAnaliseRequest request, @PathVariable Long id) {
+        var proposta = service.evaluetePropostaById(request, cliente, id);
+        if (proposta.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.noContent().build();
+    }
+
 }

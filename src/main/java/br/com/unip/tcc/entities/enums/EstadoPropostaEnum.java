@@ -10,7 +10,7 @@ public enum EstadoPropostaEnum {
     ABERTA(1L, "Aberta"),
     FECHADA(2L, "Fechada"),
     RECUSADA(3L, "Recusada"),
-    EM_EXECUCAO(4L, "Em Execução"),
+    APROVADA(4L, "Aprovada"),
     CONCLUIDA(5L, "Concluida");
 
     private final Long id;
