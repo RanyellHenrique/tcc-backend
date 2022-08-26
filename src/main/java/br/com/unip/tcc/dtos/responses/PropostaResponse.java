@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Data
 public class PropostaResponse {
 
+    private Long id;
     private TrabalhadorResponse trabalhador;
     private OfertaResponse oferta;
     private EstadoPropostaEnum estado;
@@ -16,8 +17,4 @@ public class PropostaResponse {
     private LocalDate dataFim;
     private String analiseDescricao;
     private AvaliacaoResponse avaliacao;
-
-    public String getId() {
-        return trabalhador.getId() + "-" + oferta.getId();
-    }
 }
