@@ -32,7 +32,7 @@ public class PropostaEntity {
     @Column(columnDefinition = "TEXT")
     private String analiseDescricao;
 
-    @OneToOne(mappedBy = "proposta")
+    @OneToOne(mappedBy = "proposta", cascade = CascadeType.ALL)
     private AvaliacaoEntity avaliacao;
 
     @PrePersist

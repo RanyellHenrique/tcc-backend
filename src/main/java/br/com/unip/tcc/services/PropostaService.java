@@ -1,8 +1,10 @@
 package br.com.unip.tcc.services;
 
+import br.com.unip.tcc.dtos.requests.AvaliacaoTrabalhadorRequest;
 import br.com.unip.tcc.dtos.requests.PropostaAnaliseRequest;
 import br.com.unip.tcc.dtos.requests.PropostaRequest;
 import br.com.unip.tcc.dtos.responses.PropostaResponse;
+import br.com.unip.tcc.entities.AvaliacaoEntity;
 import br.com.unip.tcc.entities.OfertaEntity;
 import br.com.unip.tcc.entities.PropostaEntity;
 import br.com.unip.tcc.entities.TrabalhadorEntity;
@@ -80,6 +82,27 @@ public class PropostaService {
         Optional<PropostaEntity> proposta = repository.findByIdProposta(id);
         setEvalueteProposta(proposta, request);
         return proposta;
+    }
+
+    public Optional<PropostaEntity> AvaliacaoTrabalhadorById(AvaliacaoTrabalhadorRequest request, String clienteEmail, Long id) {
+        var oferta = ofertaRepository.findById(request.getIdOferta()).orElseThrow();
+        if(!clienteEmail.equals(oferta.getCliente().getEmail())) {
+            throw new ForbiddenException("Forbidden");
+        }
+        Optional<PropostaEntity> proposta = repository.findByIdProposta(id);
+        setAvaliacaoTrabalhador(proposta, request);
+        return proposta;
+    }
+    private void setAvaliacaoTrabalhador(Optional<PropostaEntity> proposta, AvaliacaoTrabalhadorRequest request) {
+        if(proposta.isPresent()) {
+            AvaliacaoEntity avaliacaoEntity = new AvaliacaoEntity();
+            PropostaEntity propostaEntity = proposta.get();
+            avaliacaoEntity.setNota(request.getNota());
+            avaliacaoEntity.setDescricao(request.getDescricao());
+            avaliacaoEntity.setProposta(propostaEntity);
+            propostaEntity.setAvaliacao(avaliacaoEntity);
+            repository.save(proposta.get());
+        }
     }
 
     private void setEvalueteProposta(Optional<PropostaEntity> proposta, PropostaAnaliseRequest request) {

@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum EstadoPropostaEnum {
 
     ABERTA(1L, "Aberta"),
-    FECHADA(2L, "Fechada"),
+    FECHADA(2L, "Cancelada"),
     RECUSADA(3L, "Recusada"),
     APROVADA(4L, "Aprovada"),
     CONCLUIDA(5L, "Concluida");

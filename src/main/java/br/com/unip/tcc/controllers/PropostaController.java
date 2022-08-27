@@ -1,5 +1,6 @@
 package br.com.unip.tcc.controllers;
 
+import br.com.unip.tcc.dtos.requests.AvaliacaoTrabalhadorRequest;
 import br.com.unip.tcc.dtos.requests.PropostaAnaliseRequest;
 import br.com.unip.tcc.dtos.requests.PropostaRequest;
 import br.com.unip.tcc.dtos.responses.PropostaResponse;
@@ -75,6 +76,15 @@ public class PropostaController {
     @PutMapping("/{id}")
     public ResponseEntity<PropostaResponse> evalueteProposta(@AuthenticationPrincipal String cliente, @RequestBody @Valid PropostaAnaliseRequest request, @PathVariable Long id) {
         var proposta = service.evaluetePropostaById(request, cliente, id);
+        if (proposta.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/avaliacoes")
+    public ResponseEntity<PropostaResponse> insertAvaliacao(@AuthenticationPrincipal String cliente, @RequestBody @Valid AvaliacaoTrabalhadorRequest request, @PathVariable Long id) {
+        var proposta = service.AvaliacaoTrabalhadorById(request, cliente, id);
         if (proposta.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
