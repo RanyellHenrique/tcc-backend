@@ -8,6 +8,7 @@ import br.com.unip.tcc.entities.AvaliacaoEntity;
 import br.com.unip.tcc.entities.OfertaEntity;
 import br.com.unip.tcc.entities.PropostaEntity;
 import br.com.unip.tcc.entities.TrabalhadorEntity;
+import br.com.unip.tcc.entities.enums.EstadoPropostaEnum;
 import br.com.unip.tcc.entities.pk.PropostaEntityPK;
 import br.com.unip.tcc.mappers.PropostaMapper;
 import br.com.unip.tcc.repositories.ClienteRepository;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 import static br.com.unip.tcc.entities.enums.EstadoPropostaEnum.ABERTA;
+import static br.com.unip.tcc.entities.enums.EstadoPropostaEnum.APROVADA;
 
 @Service
 @RequiredArgsConstructor
@@ -110,8 +112,14 @@ public class PropostaService {
             PropostaEntity propostaEntity = proposta.get();
             propostaEntity.setEstado(request.getEstado());
             propostaEntity.setAnaliseDescricao(request.getAnaliseDescricao());
-            propostaEntity.getPropostaPK().getOferta().setAtiva(false);
+            setAtiva(request.getEstado(), propostaEntity);
             repository.save(proposta.get());
+        }
+    }
+
+    private void setAtiva(EstadoPropostaEnum estado, PropostaEntity proposta) {
+        if(estado.equals(APROVADA)) {
+            proposta.getPropostaPK().getOferta().setAtiva(false);
         }
     }
 
