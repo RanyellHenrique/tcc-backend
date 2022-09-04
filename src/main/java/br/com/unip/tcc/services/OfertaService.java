@@ -26,6 +26,7 @@ public class OfertaService {
 
     public OfertaResponse insert(OfertaRequest request, String emailCliente) {
         var oferta = mapper.toOfertaEntity(request);
+        oferta.setAtiva(true);
         setClienteInOferta(oferta, emailCliente);
         repository.save(oferta);
         return mapper.toOfertaResponse(oferta);

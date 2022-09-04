@@ -5,9 +5,10 @@ import br.com.unip.tcc.dtos.responses.CategoriaResponse;
 import br.com.unip.tcc.entities.CategoriaEntity;
 import br.com.unip.tcc.mappers.CategoriaMapper;
 import br.com.unip.tcc.repositories.CategoriaRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +27,11 @@ public record CategoriaService(CategoriaMapper mapper, CategoriaRepository repos
         return repository.findAll().stream()
                 .map(mapper::toCategoriaResponse)
                 .collect(Collectors.toList());
+    }
+
+    public Page<CategoriaResponse> findAllPage(String nome, Pageable pageable) {
+        return repository.findAllPageByNome(nome, pageable)
+                .map(mapper::toCategoriaResponse);
     }
 
     public Optional<CategoriaResponse> findById(Long id) {
